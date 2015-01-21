@@ -5,6 +5,9 @@
 
 	<div class="page-hdear">
 		<h2><%= @ticket.title %></h2>
+		<ul class="actions">
+			<li><%= link_to "Edit Ticket", [:edit, @project, @ticket], class: "edit" %></li>
+		</ul>
 	</div>
 
 	<%= simple_format(@ticket.description) %>
