@@ -1,7 +1,9 @@
 require "rails_helper"
 
 RSpec.feature "Deleting Projects" do
-
+  before do
+  	login_as(FactoryGirl.create(:user, :admin))
+  end
   scenario "Updating a project" do
     FactoryGirl.create(:project, name: "Sublime Text 3")
 

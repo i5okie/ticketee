@@ -7,7 +7,7 @@ it "displays an error for a missing project" do
 
 	expect(response).to redirect_to(projects_path)
 
-	message = "The page you were looking for could not be found."
+	message = "The project you were looking for could not be found."
 	expect(flash[:alert]).to eql(message)
 end
 end
