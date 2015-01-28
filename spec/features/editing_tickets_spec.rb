@@ -3,11 +3,16 @@ require "rails_helper"
 RSpec.feature "Editing tickets" do
 	let!(:project) { FactoryGirl.create(:project) }
 	let!(:user) { FactoryGirl.create(:user) }
+
 	let!(:ticket) do 
 		FactoryGirl.create(:ticket, project: project, author: user)
 	end
 
 	before do
+		# quick fix to push 8.3.2 section's edits
+		login_as(user)
+		assign_role!(user, :viewer, project)
+		# ----
 		visit project_ticket_path(project, ticket)
 		click_link "Edit Ticket"
 	end

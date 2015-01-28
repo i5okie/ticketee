@@ -21,10 +21,12 @@ class TicketsController < ApplicationController
 			render "new"
 		end
 	end
+	
 	def edit
 	end
 
 	def show
+		authorize @ticket, :show?
 	end
 
 	def update
