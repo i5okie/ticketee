@@ -7,6 +7,10 @@ class TicketPolicy < ApplicationPolicy
 	def update?
 		user.try(:admin?) || record.project.has_manager?(user) || (record.project.has_editor?(user) && record.author == user)
 	end
+
+	def destroy?
+		user.try(:admin?) || record.project.has_manager?(user)
+	end
 	
   class Scope < Scope
     def resolve
