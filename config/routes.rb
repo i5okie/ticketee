@@ -14,6 +14,9 @@ Rails.application.routes.draw do
     resources :tickets
   end
 
+  resources :tickets, only: [] do
+    resources :comments, only: [:create]
+  end
 
   resources :assets, only: [:show, :new], path: :files
   # The priority is based upon order of creation: first created -> highest priority.
