@@ -5,3 +5,11 @@
 blockquote.comment p {
   font-size: 14px;
 }
+
+.state {
+  @extend .label
+}
+
+#tickets li {
+  padding-bottom: 5px;
+}
