@@ -18,6 +18,10 @@
 		Created by <%= @ticket.author.email %>, <%= time_ago_in_words(@ticket.created_at) %> ago
 	</p>
 
+	<% if @ticket.state.present? %>
+	  <p><strong>State:</strong> <%= render @ticket.state %></p>
+	<% end %>
+
 	<%= simple_format(@ticket.description) %>
 
 	<% if @ticket.assets.any? %>
