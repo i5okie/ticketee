@@ -8,7 +8,6 @@ RSpec.feature "Users can comment on tickets" do
    before do
      login_as(user)
      assign_role!(user, :manager, project)
-     
 
      FactoryGirl.create(:state, name: "Open")
 
@@ -50,7 +49,6 @@ RSpec.feature "Users can comment on tickets" do
    end
 
   scenario "cannot change the state without permission" do
-    login_as(FactoryGirl.create(:user))
     assign_role!(user, :editor, project)
 
     click_link ticket.title
