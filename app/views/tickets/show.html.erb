@@ -24,6 +24,8 @@
 
 	<%= simple_format(@ticket.description) %>
 
+	<div id="tags"><%= render @ticket.tags %></div>
+
 	<% if @ticket.assets.any? %>
 	  <h4>Attached Files</h4>
 	    <div class="assets">

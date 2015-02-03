@@ -13,3 +13,17 @@ blockquote.comment p {
 #tickets li {
   padding-bottom: 5px;
 }
+
+.tag {
+  @extend .btn;
+  @extend .btn-sm;
+  @extend .btn-info;
+  margin-right: 10px;
+  font-weight: bold;
+
+  &:before {
+    font-family: "FontAwesome";
+    padding-right: 0.5em;
+    @extend .fa-tag;
+  }
+}

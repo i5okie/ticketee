@@ -4,6 +4,9 @@ class Ticket < ActiveRecord::Base
   belongs_to :state
   has_many :assets
   has_many :comments
+  has_and_belongs_to_many :tags
+
+  attr_accessor :tag_names
 
   accepts_nested_attributes_for :assets, reject_if: :all_blank
 
@@ -11,6 +14,12 @@ class Ticket < ActiveRecord::Base
   validates :description, presence: true, length: { minimum: 10 }
 
   before_create :assign_default_state
+
+  def tag_names=(names)
+    names.split(",").each do |name|
+      self.tags << Tag.find_or_initialize_by(name: name)      
+    end
+  end
 
   private
 
