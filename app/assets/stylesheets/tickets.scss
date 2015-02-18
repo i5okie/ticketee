@@ -7,23 +7,28 @@ blockquote.comment p {
 }
 
 .state {
-  @extend .label
+  @extend .label;
+  font-size: 12px;
+  padding: 0.3em 0.6em;
 }
 
 #tickets li {
-  padding-bottom: 5px;
+  padding-bottom: 10px;
 }
 
 .tag {
-  @extend .btn;
-  @extend .btn-sm;
-  @extend .btn-info;
+  @extend .state;
+  @extend .label-info;
   margin-right: 10px;
-  font-weight: bold;
 
-  &:before {
-    font-family: "FontAwesome";
-    padding-right: 0.5em;
-    @extend .fa-tag;
+  a {
+    color: white;
+
+    &.remove {
+      font-family: "FontAwesome";
+      @extend .fa-close;
+      margin-right: 0.5em;
+      text-decoration: none;
+    }
   }
 }

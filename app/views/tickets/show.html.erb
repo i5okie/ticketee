@@ -2,7 +2,22 @@
 	<div class="page-header">
 		<h1><%= @project.name %></h1>
 	</div>
-
+  <table id="attributes">
+    <tr>
+      <th>Author:</th>
+      <td><%= @ticket.author.email %></td>
+    </tr>
+    <tr>
+      <th>Created:</th>
+      <td><%= time_ago_in_words(@ticket.created_at) %> ago</td>
+    </tr>
+    <% if @ticket.tags.any? %>
+      <tr id="tags">
+        <th>Tags:</th>
+        <td><%= render @ticket.tags, ticket: @ticket %></td>
+      </tr>
+    <% end %>
+  </table>
 	<div class="page-header">
 		<h2><%= @ticket.title %></h2>
 		<ul class="actions">
@@ -23,8 +38,6 @@
 	<% end %>
 
 	<%= simple_format(@ticket.description) %>
-
-	<div id="tags"><%= render @ticket.tags %></div>
 
 	<% if @ticket.assets.any? %>
 	  <h4>Attached Files</h4>

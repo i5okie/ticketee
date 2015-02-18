@@ -17,6 +17,10 @@ class TicketPolicy < ApplicationPolicy
 	end
 
   def change_state?
+    user.try(:admin?) || record.project.has_manager?(user)
+  end
+
+  def tag?
     destroy?
   end
 	
