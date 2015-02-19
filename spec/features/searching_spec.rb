@@ -26,7 +26,7 @@ feature "Users can search for tickets matching specific criteria" do
     click_link project.name
   end
 
-  scenario "searching by tag", js: true do
+  scenario "searching by tag" do
     fill_in "Search", with: "tag:iteration_1"
     click_button "Search"
     within("#tickets") do
@@ -35,9 +35,18 @@ feature "Users can search for tickets matching specific criteria" do
     end
   end
 
-  scenario "searching by state", js: true do
+  scenario "searching by state" do
     fill_in "Search", with: "state:Open"
     click_button "Search"
+    within("#tickets") do
+      expect(page).to have_content("Create projects")
+      expect(page).to_not have_content("Create users")
+    end
+  end
+
+  scenario "when clicking on a tag" do
+    click_link "Create projects"
+    click_link "iteration_1"
     within("#tickets") do
       expect(page).to have_content("Create projects")
       expect(page).to_not have_content("Create users")
