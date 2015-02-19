@@ -37,6 +37,8 @@ gem 'carrierwave', '~> 0.10.0'
 # Use Unicorn as the app server
 # gem 'unicorn'
 
+gem "searcher", github: "radar/searcher"
+
 gem 'devise', '~> 3.4.1'
 
 # Use Capistrano for deployment

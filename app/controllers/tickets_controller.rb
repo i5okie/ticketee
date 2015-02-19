@@ -14,6 +14,12 @@ class TicketsController < ApplicationController
 
 	end
 
+	def search
+		authorize @project, :show?
+		@tickets = @project.tickets.search(params[:search] || "")
+		render "projects/show"
+	end
+
 	def create
 		whitelisted_params = ticket_params
 		  @ticket = @project.tickets.new
