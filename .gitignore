@@ -11,6 +11,8 @@
 /db/*.sqlite3
 /db/*.sqlite3-journal
 
+/config/initializers/carrierwave.rb
+
 # Ignore all logfiles and tempfiles.
 /log/*
 !/log/.keep
