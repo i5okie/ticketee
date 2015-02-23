@@ -1,74 +1,87 @@
 class TicketsController < ApplicationController
 
-	before_action :set_project
-	before_action :set_ticket, only: [:show, :edit, :update, :destroy]
+  before_action :set_project
+  before_action :set_ticket, only: [:show, :edit, :update, :destroy]
 
 
-	def new
-	  @ticket = @project.tickets.build
-	  @ticket.assets.build
-	  authorize @ticket, :create?
-	end
+  def new
+    @ticket = @project.tickets.build
+    @ticket.assets.build
+    authorize @ticket, :create?
+  end
 
-	def index
+  def index
 
-	end
+  end
 
-	def create
-		@ticket = @project.tickets.build(ticket_params)
-		@ticket.author = current_user
-		authorize @ticket, :create?
+  def search
+    authorize @project, :show?
+    @tickets = @project.tickets.search(params[:search] || "")
+    render "projects/show"
+  end
 
-		if @ticket.save
-			flash[:notice] = "Ticket has been created."
-			redirect_to [@project, @ticket]
-		else
-			flash.now[:alert] = "Ticket has not been created."
-			render "new"
-		end
-	end
-	
-	def edit
-		authorize @ticket, :update?
-	end
+  def create
+    whitelisted_params = ticket_params
+      @ticket = @project.tickets.new
 
-	def show
-		authorize @ticket, :show?
-		@comment = @ticket.comments.build
-	end
+      unless policy(@ticket).tag?
+        whitelisted_params.delete(:tag_names)
+      end
 
-	def update
-		authorize @ticket, :update?
-		
-		if @ticket.update(ticket_params)
-			flash[:notice] = "Ticket has been updated."
-			redirect_to [@project, @ticket]
-		else
-			flash.now[:alert] = "Ticket has not been updated."
-			render "edit"
-		end
-	end
+      @ticket.attributes = whitelisted_params
+      @ticket.author = current_user
+    authorize @ticket, :create?
 
-	def destroy
-		authorize @ticket, :destroy?
-		@ticket.destroy
-		flash[:notice] = "Ticket has been deleted."
+    if @ticket.save
+      flash[:notice] = "Ticket has been created."
+      redirect_to [@project, @ticket]
+    else
+      flash.now[:alert] = "Ticket has not been created."
+      render "new"
+    end
+  end
+  
+  def edit
+    authorize @ticket, :update?
+  end
 
-		redirect_to @project
-	end
+  def show
+    authorize @ticket, :show?
+    @comment = @ticket.comments.build
+  end
 
-	private
+  def update
+    authorize @ticket, :update?
+    
+    if @ticket.update(ticket_params)
+      flash[:notice] = "Ticket has been updated."
+      redirect_to [@project, @ticket]
+    else
+      flash.now[:alert] = "Ticket has not been updated."
+      render "edit"
+    end
+  end
 
-	def ticket_params
-	  params.require(:ticket).permit(:title, :description, :tag_names, assets_attributes: [:asset, :asset_cache])
-	end
+  def destroy
+    authorize @ticket, :destroy?
+    @ticket.destroy
+    flash[:notice] = "Ticket has been deleted."
 
-	def set_project
-		@project = Project.find(params[:project_id])
-	end
+    redirect_to @project
+  end
 
-	def set_ticket
-		@ticket = @project.tickets.find(params[:id])
-	end
+  private
+
+  def ticket_params
+    params.require(:ticket).permit(:title, :description, :tag_names, assets_attributes: [:asset, :asset_cache])
+  end
+
+  def set_project
+    @project = Project.find(params[:project_id])
+  end
+
+  def set_ticket
+    @ticket = @project.tickets.find(params[:id])
+  end
 
 end
