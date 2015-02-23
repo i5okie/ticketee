@@ -31,4 +31,23 @@ feature "Ticket Notifications" do
       expect(page).to have_content(ticket.title)
     end
   end
+
+  scenario "comment authors are automatically subscribed to a ticket" do
+    click_link project.name
+    click_link ticket.title
+    fill_in "Text", with: "Is it out yet?"
+    click_button "Create Comment"
+    click_link "Sign out"
+
+    reset_mailer
+
+    login_as(alice)
+    visit project_ticket_path(project, ticket)
+    fill_in "Text", with: "Not yet - sorry!"
+    click_button "Create Comment"
+
+    expect(page).to have_content("Comment has been created.")
+    expect(unread_emails_for(bob.email).count).to eq 1
+    #expect(unread_emails_for(alice.email).count).to eq 1
+  end
 end

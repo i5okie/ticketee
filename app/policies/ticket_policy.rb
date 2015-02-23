@@ -23,6 +23,10 @@ class TicketPolicy < ApplicationPolicy
   def tag?
     destroy?
   end
+
+  def tag?
+    user.try(:admin?) || record.project.has_manager?(user)
+  end
 	
   class Scope < Scope
     def resolve
