@@ -57,9 +57,7 @@ RSpec.feature "Users can comment on tickets" do
 
   scenario "when adding a new tag to a ticket" do
     click_link ticket.title
-    within("#ticket #tags") do
-      expect(page).to_not have_content("bug")
-    end
+    expect(page).not_to have_content("bug")
 
     fill_in "Text", with: "Adding the bug tag"
     fill_in "Tags", with: "bug"

@@ -5,6 +5,7 @@ class Ticket < ActiveRecord::Base
   has_many :assets
   has_many :comments
   has_and_belongs_to_many :tags
+  has_and_belongs_to_many :watchers, join_table: "ticket_watchers", class_name: "User"
 
   attr_accessor :tag_names
 
@@ -14,6 +15,12 @@ class Ticket < ActiveRecord::Base
   validates :description, presence: true, length: { minimum: 10 }
 
   before_create :assign_default_state
+  after_create :author_watches_me
+
+  searcher do
+    label :tag, from: :tags, field: "name"
+    label :state, from: :state, field: "name"
+  end
 
   def tag_names=(names)
     names.split(",").each do |name|
@@ -25,6 +32,12 @@ class Ticket < ActiveRecord::Base
 
   def assign_default_state
     self.state = State.default
+  end
+
+  def author_watches_me
+    if author
+      self.watchers << author unless self.watchers.include?(author)
+    end
   end
 
 end
