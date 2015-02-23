@@ -1,6 +1,13 @@
 language: ruby
 rvm: 2.2.0
-script: "bin/rake spec"
+script: bin/rake spec
 before_install:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+deploy:
+  provider: heroku
+  api_key: 54e0d1c6-d0a3-4a63-8e37-f02e5c6864c6
+    secure: B4uydowCpqOo3RqW5fRJdP0/4HkxUvj4LMZxUuYKi+9M2ZQIxo4ELB5Amss57hGZmFquZnvgcUBkZOxmM6VV7Uz9eh9946/C0R8mMDgupUQ1MsKSbGvZrpiW6RsiL+8fyD3HeOUc0vIRem85kAynMyvtUctX1M9NS+F2n/4r3yU=
+  app: pure-shelf-9474
+  on:
+    repo: i5okie/ticketee
