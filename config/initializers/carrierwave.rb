@@ -5,10 +5,10 @@ CarrierWave.configure do |config|
     config.storage = :fog
     config.fog_credentials = {
       :provider => "AWS",
-      :aws_access_key_id => ENV["AKIAJFHCYOG6JA6AD6RQ"],
-      :aws_secret_access_key => ENV["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"],
+      :aws_access_key_id => ENV["S3_KEY"],
+      :aws_secret_access_key => ENV["S3_SECRET"],
     }
-    config.fog_directory = ENV["i5okie-files"]
+    config.fog_directory = ENV["S3_BUCKET"]
   else
     config.storage = :file
   end
