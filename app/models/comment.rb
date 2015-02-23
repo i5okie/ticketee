@@ -12,6 +12,7 @@ class Comment < ActiveRecord::Base
 
   after_create :set_ticket_state
   after_create :associate_tags_with_ticket
+  after_create :author_watches_ticket
 
   before_create :set_previous_state
 
@@ -22,15 +23,21 @@ class Comment < ActiveRecord::Base
   	ticket.save!
   end
 
- def associate_tags_with_ticket
-   if tag_names
-     tag_names.split(".").each do |name|
-       ticket.tags << Tag.find_or_create_by(name: name)
+   def associate_tags_with_ticket
+     if tag_names
+       tag_names.split(".").each do |name|
+         ticket.tags << Tag.find_or_create_by(name: name)
+       end
      end
    end
- end
 
-  def set_previous_state
+   def author_watches_ticket
+     if author && !ticket.watchers.include?(author)
+       ticket.watchers << author
+     end
+   end
+
+   def set_previous_state
     self.previous_state = ticket.state
-  end
+   end
 end
