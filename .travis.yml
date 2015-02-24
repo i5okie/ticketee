@@ -6,8 +6,8 @@ before_install:
 - sh -e /etc/init.d/xvfb start
 deploy:
   provider: heroku
-  api_key: 54e0d1c6-d0a3-4a63-8e37-f02e5c6864c6
-    secure: YDnhhAgE5NGYEReT2j9SxQBT+U2d//VCT4W/PvfImgdwDM1+TcYVbd/pkPtpQaNnzdLIcdcsjcldUvbbci5sq1URugZYdqHRDw1TxlWsmdS9nLr43/4RLpUcbrco7wcoIDZNLixHoOx7QpC39GioA59Och+tbsa5ZyxEyCf9BPc=
+  api_key:
+    secure: DTaWj09c/bbSAx+eKgnfeKHfKQayhf97Mt9RE6zYtw+x35w9NFX52MtSc+d+bu4w+JUesxGSLL2hNzP5SEiZ2Bp9oviZA8yMJ6+vQf9cqNUjIS1yqOhJSaAGjCx7ySxvN+JshizUaUhTh2GI446I/LaykrgghCBKxQ7D0Kdv820=
   app: pure-shelf-9474
   on:
     repo: i5okie/ticketee
