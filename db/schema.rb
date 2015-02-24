@@ -13,9 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20150219214910) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "assets", force: :cascade do |t|
     t.string   "asset"
     t.integer  "ticket_id"
@@ -23,7 +20,7 @@ ActiveRecord::Schema.define(version: 20150219214910) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "assets", ["ticket_id"], name: "index_assets_on_ticket_id", using: :btree
+  add_index "assets", ["ticket_id"], name: "index_assets_on_ticket_id"
 
   create_table "comments", force: :cascade do |t|
     t.text     "text"
@@ -35,9 +32,9 @@ ActiveRecord::Schema.define(version: 20150219214910) do
     t.integer  "previous_state_id"
   end
 
-  add_index "comments", ["author_id"], name: "index_comments_on_author_id", using: :btree
-  add_index "comments", ["previous_state_id"], name: "index_comments_on_previous_state_id", using: :btree
-  add_index "comments", ["ticket_id"], name: "index_comments_on_ticket_id", using: :btree
+  add_index "comments", ["author_id"], name: "index_comments_on_author_id"
+  add_index "comments", ["previous_state_id"], name: "index_comments_on_previous_state_id"
+  add_index "comments", ["ticket_id"], name: "index_comments_on_ticket_id"
 
   create_table "projects", force: :cascade do |t|
     t.string   "name"
@@ -54,8 +51,8 @@ ActiveRecord::Schema.define(version: 20150219214910) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "roles", ["project_id"], name: "index_roles_on_project_id", using: :btree
-  add_index "roles", ["user_id"], name: "index_roles_on_user_id", using: :btree
+  add_index "roles", ["project_id"], name: "index_roles_on_project_id"
+  add_index "roles", ["user_id"], name: "index_roles_on_user_id"
 
   create_table "states", force: :cascade do |t|
     t.string  "name"
@@ -73,8 +70,8 @@ ActiveRecord::Schema.define(version: 20150219214910) do
     t.integer "ticket_id", null: false
   end
 
-  add_index "tags_tickets", ["tag_id", "ticket_id"], name: "index_tags_tickets_on_tag_id_and_ticket_id", using: :btree
-  add_index "tags_tickets", ["ticket_id", "tag_id"], name: "index_tags_tickets_on_ticket_id_and_tag_id", using: :btree
+  add_index "tags_tickets", ["tag_id", "ticket_id"], name: "index_tags_tickets_on_tag_id_and_ticket_id"
+  add_index "tags_tickets", ["ticket_id", "tag_id"], name: "index_tags_tickets_on_ticket_id_and_tag_id"
 
   create_table "ticket_watchers", id: false, force: :cascade do |t|
     t.integer "user_id"
@@ -91,7 +88,7 @@ ActiveRecord::Schema.define(version: 20150219214910) do
     t.integer  "state_id"
   end
 
-  add_index "tickets", ["project_id"], name: "index_tickets_on_project_id", using: :btree
+  add_index "tickets", ["project_id"], name: "index_tickets_on_project_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false
@@ -109,14 +106,7 @@ ActiveRecord::Schema.define(version: 20150219214910) do
     t.boolean  "admin",                  default: false
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
-  add_foreign_key "assets", "tickets"
-  add_foreign_key "comments", "states", column: "previous_state_id"
-  add_foreign_key "comments", "tickets"
-  add_foreign_key "comments", "users", column: "author_id"
-  add_foreign_key "roles", "projects"
-  add_foreign_key "roles", "users"
-  add_foreign_key "tickets", "projects"
 end
