@@ -9,6 +9,10 @@ class User < ActiveRecord::Base
   	"#{email} (#{admin? ? "Admin" : "User"})"
   end
 
+  def generate_api_key
+    update_column(:api_key, SecureRandom.hex(16))
+  end
+
   def role_on(project)
   	roles.find_by(project_id: project).try(:name)
   end

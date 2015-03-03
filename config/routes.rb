@@ -11,6 +11,12 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :api do
+    scope path: "/projects/:project_id", as: "project" do
+      resources :tickets
+    end
+  end
+
   devise_for :users
 
   root "projects#index"

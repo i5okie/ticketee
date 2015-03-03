@@ -60,7 +60,12 @@ class TicketsController < ApplicationController
 
   def show
     authorize @ticket, :show?
-    @comment = @ticket.comments.build
+    @comment = @ticket.comments.build(state_id: @ticket.state_id)
+
+    # respond_to do |format|
+    #   format.html
+    #   format.json { render json: @ticket }
+    # end
   end
 
   def update
